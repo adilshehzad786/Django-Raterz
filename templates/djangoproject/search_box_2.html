@@ -1,0 +1,77 @@
+{% extends 'djangoproject/base.html' %}
+
+{% block content %}
+<h1>Search Reviews Here </h1>
+
+<br/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<form action="{% url 'search-blog-review' %}" method="GET" value="{{request.GET.q}}">
+<form class="form-inline">
+Search <input class="form-control"  type="text" name="q" value="{{request.GET.q}}" placeholder="Search Reviews"/>
+<input type="submit" name="submit" value="Search"/>
+</form>
+</form>
+
+{% if submitbutton == 'Search' and request.GET.q != '' %}
+{% if results %}
+<h1>Results for <b>{{ request.GET.q }}</b></h1>
+<br/><br/>
+
+{% for result in results %}
+
+<article class="media content-section">
+<a class="mr-2" href="{% url 'user-posts' result.author.username %}"> <img class="rounded-circle article-img" src="{{ result.author.profile.image.url }}"> </a>
+    <div class="media-body">
+        <div class="article-metadata">
+
+            <h5>Instructor :<font color="green"> {{result.topic}} </font></h5>
+
+            <br>
+
+
+            <p>
+                <small class="text-muted"> Date Posted : {{result.date_posted|date:"F d, Y" }}</small>
+            </p>
+        </div>
+
+       <h5> Comments :<font color="#483d8b"> {{result.content}} </font></h5>
+        <a class="mr-2" href="{% url 'post-detail' result.id %}">View Detail</a>
+    </div>
+
+
+
+</article>
+
+{% endfor %}
+{% else %}
+   <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  No Search Found of <strong>{{ request.GET.q }}</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endif %}
+{% endif %}
+<div align="center">
+    {% if is_paginated %}
+    {% if page_obj.has_previous %}
+    <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+    <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+    <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+    {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock %} content %}
+

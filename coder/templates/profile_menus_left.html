@@ -1,0 +1,22 @@
+{% load i18n %}
+
+{% if request.user.is_authenticated %}
+  <div class="ui secondary vertical pointing fluid menu">
+    <a class="item spf-link edit-profile-menu-left {% if request.resolver_match.url_name == 'user_profile_edit' %}active{% endif %}"
+      href="">
+      <i class="user icon"></i>
+    </a>
+    <a class="item spf-link edit-email-menu-left {% if request.resolver_match.url_name == 'account_email' %}active{% endif %}"
+      href="">
+      <i class="mail icon"></i>
+    </a>
+    <a class="item spf-link edit-password-menu-left {% if request.resolver_match.url_name == 'account_change_password' %}active{% endif %}"
+      href="">
+      <i class="lock icon"></i>
+    </a>
+    <a class="item spf-link edit-social-menu-left {% if request.resolver_match.url_name == 'socialaccount_connections' %}active{% endif %}"
+      href="">
+      <i class="share alternate icon"></i>
+    </a>
+  </div>
+{% endif %}

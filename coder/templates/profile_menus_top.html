@@ -1,0 +1,20 @@
+{% load i18n %}
+
+{% if request.user.is_authenticated %}
+  <div class="repo ribbon">
+    <div class="ui tabular menu">
+      <div class="ui container">
+        <a class="item spf-link view-profile-menu-top" href="">
+          <i class="user icon"></i>
+        </a>
+        <a class="item spf-link activity-menu-top">
+          <i class="rss icon"></i>
+        </a>
+        <a class="item spf-link edit-profile-menu-top "
+          href="">
+          <i class="settings icon"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+{% endif %}

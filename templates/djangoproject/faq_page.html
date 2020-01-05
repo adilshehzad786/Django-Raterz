@@ -1,0 +1,109 @@
+{% extends 'djangoproject/base.html' %}
+{% load static %}
+{% block content %}
+    {% load widget_tweaks %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/CSS/style.css'%}">
+
+
+    <div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse-non-md" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                   What is the purpose of this site?
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+              The purpose of the site is to be a resource for students. Where else can you find out what others think of an instructor? When you have the option of choosing a teacher, wouldn't you really like some information? It also gives you, the user, a place to voice your opinion. It gives you a place to make a difference in your education.
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Do I have to give you my name or email address?
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+         You are not required to log in or enter your name or email address.
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Some of my comments got deleted. My teacher really is a fat, ugly jerk.
+        </button>
+      </h2>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+      <div class="card-body">
+                Comments should be about teaching ability. Every new rating is reviewed, and we reserve the right to delete comments OR an entire rating.
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+    <div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Do you have a flyer I can post at my school?
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse off" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+        Yes You Can Here is the Download Link <a href="https://onedrive.live.com/download?cid=FE746F01D44C3E5C&resid=FE746F01D44C3E5C%2114497&authkey=ALrr0wqwZTdT-0c&em=2"target="_blank">Right Here</a>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          My school doesn't have many rating.How can I get more people to enter ratings?
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+        The best thing you can do is write an article about the site in your school paper. This ALWAYS has a huge impact on the number of ratings and makes the site become less entertainment oriented and more of a resource for helping you plan your class schedule. Other things you can do is post flyers around campus, post links to the site on message boards that are school-related, and email your friends about the site.
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          I know a business that I think would like to advertise on the site. Are you interested?
+        </button>
+      </h2>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+      <div class="card-body">
+                 Of course! Contact us and we will discuss our rates for banner ads and sponsorship opportunities.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'djangoproject/base.html' %}
+{% load pinax_ratings_tags %}
+{% block content %}
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d217807.96002020614!2d74.06125096648378!3d31.462325577381367!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3918fde40e954753%3A0xb8ea639d79127a78!2sLahore%20City%2C%20Lahore%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1575098502103!5m2!1sen!2s" width="auto" height="auto" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+    <!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+</style>
+</head>
+<body>
+
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Font Awesome Icon Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.checked {
+  color: orange;
+}
+</style>
+</head>
+<body>
+<div id="user_rating"></div>
+<h2>Lahore City </h2>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star"></span>
+<span class="fa fa-star"></span>
+
+</body>
+</html>
+
+<button type="button" class="collapsible">Summary</button>
+<div class="content">
+ <strong>Lahore is the capital of the Pakistani province of Punjab. Lahore is the country's second-most populous city after Karachi. Lahore is one of Pakistan's wealthiest cities, with an estimated GDP of $58.14 billion as of 2015 </strong>
+</div>
+
+
+<button type="button" class="collapsible">NIGHT LIFE</button>
+<div class="content">
+  <p><img alt="92976.jpg" height="147" src="https://locallylahore.com/wp-content/uploads/food-Street-Lahore-1024x768.jpg" style="float: left;" width="221"></p>    <strong>Bars, nightclubs, restaurants, and music venues give Lahore a distinctive nightlife scene. The culture here is unique: It unites the often-regal beauty of Pakistan’s architecture with modern elements to create an enticing agenda of things to do in the capital of Punjab.</strong>
+</div>
+<button type="button" class="collapsible">TRANSPORT</button>
+<div class="content">
+  <p><img alt="92976.jpg" height="147" src="https://www.zameen.com/blog/wp-content/uploads/2019/05/Body-1-1024x640.jpg" style="float: left;" width="221"></p>     <strong>Besides being Pakistan’s second-most populated city, Lahore is also the capital of Punjab, with an average population of 11 million, as per the findings of the 2017 Census of Pakistan. Over the years, similar to other necessary utilities, the Government of Punjab has initiated many public transport projects in Lahore to facilitate residents of the city. Several rapid transit projects have been completed to reduce commute time and make public transport in Lahore accessible for all, while quite a few projects are underway that will connect the entire city and further empower convenient commuting.</strong>
+</div>
+<button type="button" class="collapsible">STUDENT JOBS</button>
+<div class="content">
+  <strong>Because of High Competition Between People  Student Jobs are Hard to Find in Lahore City . </strong>
+</div>
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
+
+</body>
+</html>
+
+{% endblock %}

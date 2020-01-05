@@ -1,0 +1,41 @@
+{% extends "djangoproject/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Log In</legend>
+                {{ form|crispy }}
+            </fieldset>
+
+            <html>
+  <head>
+    <title>reCAPTCHA demo: Simple page</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  </head>
+  <body>
+    <form action="?" method="POST">
+      <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+      <br/>
+      <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Login</button>
+
+            </div>
+    </form>
+  </body>
+</html>
+
+
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Need An Account? <a class="ml-2" href="{% url 'register' %}">Sign Up Now</a>
+
+                Forget Password? <a class="ml-2" href="{% url 'password_reset' %}">Forget Password </a>
+            </small>
+        </div>
+    </div>
+
+{% endblock content %}

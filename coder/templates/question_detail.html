@@ -1,0 +1,499 @@
+{% extends "base.html" %}
+{% load i18n staticfiles %}
+
+{% block title %}{{ question.title }} :: {{ block.super }}{% endblock %}
+
+{% block css %}
+  <link href="{% static 'mrcoder/plugins/css/ace.min.css' %}" type="text/css" media="all" rel="stylesheet" />
+  <link href="{% static 'mrcoder/plugins/css/resizable.min.css' %}" type="text/css" media="all" rel="stylesheet" />
+  <link href="{% static 'mrcoder/css/martor/martor.min.css' %}" type="text/css" media="all" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+  <div class="page content">
+    <div class="repo ribbon ribbon-detail">
+      <div class="ui container">
+        <div class="ui massive breadcrumb breadcrumb-title-detail">
+          <a href="{% url 'question_detail' pk=question.pk %}"
+            class="ui grey section no-underline spf-link">{{ question.title }}</a>
+        </div>
+        <div class="repo options">
+          <a class="ui small primary button spf-link" href="{% url 'question_create' %}">
+            Ask Question
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui equal width vertically padded grid container">
+      <div class="twelve wide column">
+        <div class="ui divided items">
+          <div class="item item-question">
+            <div class="stats">
+              <div class="vote-up stats-inside-detail" data-mode="question" data-id="{{ question.id }}">
+                <i class="triangle up big link grey icon"></i>
+              </div>
+              <div class="vote-total stats-inside-detail" data-mode="question" data-id="{{ question.id }}">
+                <div class="value">
+                  {{ question.rating.get_difference }}
+                </div>
+              </div>
+              <div class="vote-down stats-inside-detail" data-mode="question" data-id="{{ question.id }}">
+                <i class="triangle down big link grey icon"></i>
+              </div>
+              <div class="favorite-icon stats-inside-detail">
+                <i class="star link disabled icon"></i>
+              </div>
+              <div class="favorite-count stats-inside-detail">
+                <div class="value">
+                  20
+                </div>
+              </div>
+            </div>
+            <div class="content">
+
+                      </td>
+
+                      {% if question.edited and question.edits_object is not None %}
+                        {% if question.editor == question.author %}
+                          <td class="no-border top-align user-info user-signature">
+                            <a href="" class="ui link no-underline spf-link user-action-time" title="{{ question.modified }}">
+                              {% blocktrans with time=question.modified|timesince %}edited {{ time }} ago{% endblocktrans %}
+                            </a>
+                          </td>
+                        {% else %}
+                          <td class="no-border user-info user-signature">
+                            <div class="ui comments">
+                              <a href="" class="ui link no-underline spf-link user-action-time" title="{{ question.modified }}">
+                                {% blocktrans with time=question.modified|timesince %}edited {{ time }} ago{% endblocktrans %}
+                              </a>
+                              <div class="comment user-info-signature">
+                                <a class="avatar spf-link" href="">
+                                  <img src="{{ question.editor.email|gravatar:'75' }}">
+                                </a>
+                                <div class="content">
+                                  <a class="author spf-link" href="{% url 'user_profile' pk=question.editor.pk username=question.editor.username %}">{{ question.editor }}</a>
+                                  <div class="text">
+                                    <span class="reputation">
+                                      <i class="diamond orange icon"></i> <b>269K</b>
+                                    </span>
+                                    <span class="gold-badge">
+                                      <i class="circle small yellow icon icon-dot-badge"></i> 12
+                                    </span>
+                                    <span class="silver-badge">
+                                      <i class="circle small grey icon icon-dot-badge"></i> 38
+                                    </span>
+                                    <span class="bronze-badge">
+                                      <i class="circle small brown icon icon-dot-badge"></i> 93
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        {% endif %}
+                      {% endif %}
+
+                      <td class="no-border user-info user-signature">
+                        <div class="ui comments">
+                          <span class="ui grey color user-action-time" title="{{ question.created }}">
+                            {% blocktrans with time=question.created|timesince %}asked {{ time }} ago{% endblocktrans %}
+                          </span>
+                          <div class="comment user-info-signature">
+                            <a class="avatar spf-link" href="{% url 'user_profile' pk=question.author.pk username=question.author.username %}">
+                              <img src="{{ question.author.email|gravatar:'75' }}">
+                            </a>
+                            <div class="content">
+                              <a class="author spf-link" href="{% url 'user_profile' pk=question.author.pk username=question.author.username %}">{{ question.author }}</a>
+                              <div class="text">
+                                <span class="reputation">
+                                  <i class="diamond orange icon"></i> <b>269K</b>
+                                </span>
+                                <span class="gold-badge">
+                                  <i class="circle small yellow icon icon-dot-badge"></i> 12
+                                </span>
+                                <span class="silver-badge">
+                                  <i class="circle small grey icon icon-dot-badge"></i> 38
+                                </span>
+                                <span class="bronze-badge">
+                                  <i class="circle small brown icon icon-dot-badge"></i> 93
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="ui divider"></div>
+
+                <table class="ui table no-border table-comments table-question-comments" data-target="question:{{ question.id }}">
+                  <tbody>
+                    {% for comment in question.get_comments_limit %}
+                      <tr id="question-comment-{{ question.id }}">
+                        <td class="ui grey color top-align">18</td>
+                        <td class="top-align">
+                          <i class="arrow up grey link icon hover-opacity"></i><br />
+                          <i class="flag grey link icon hover-opacity"></i>
+                        </td>
+                        <td>{{ comment.comment|safe_markdown }} <a>{{ comment.author }}</a> <date class="ui grey color">{{ comment.created }}</date>
+                          {% if comment.edit %}<i class="ui pencil small grey icon"></i>{% endif %}</td>
+                      </tr>
+                    {% endfor %}
+                    <tr class="comment-actions">
+                      <td colspan="3" style="padding:10px;">
+                        {% if request.user.is_authenticated %}
+                          <span class="ui blue color link add-a-comment" data-target="question:{{ question.id }}">add a comment</span>
+                          {% if question.has_offset_comments %}
+                            <span class="ui grey color vertical-line">|</span>
+                          {% endif %}
+                        {% endif %}
+
+                        {% if question.has_offset_comments %}
+                          <span class="ui blue color link show-more-comments" data-target="question:{{ question.id }}">
+                            show <b>{{ question.get_comments_offset.count }}</b> more comments
+                          </span>
+                        {% endif %}
+                      </td>
+                    </tr>
+                    <tr class="comment-actions">
+                      <td colspan="3" class="no-border">
+                        <span class="ui link bounty-action">start a bounty</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div><!-- end /.item-question -->
+
+          {% if answers_question %}
+            <div class="ui tabular menu" id="tab-answer">
+              <div class="ui container">
+                <h3 class="left floated header item">
+                  {{ answers_question.count }}
+                  {% if answers_question.count <= 1 %}{% trans "Answer" %}{% else %}{% trans "Answers" %}{% endif %}
+                </h3>
+                <a class="{% if request.GET.order != 'oldest' and request.GET.order != 'votes' %}active{% endif %} item" href="?order=active#tab-answer">
+                  <i class="wait icon"></i> {% trans "active" %}
+                </a>
+                <a class="{% if request.GET.order == 'oldest' %}active{% endif %} item" href="?order=oldest#tab-answer">
+                  <i class="history icon"></i> {% trans "oldest" %}
+                </a>
+                <a class="{% if request.GET.order == 'votes' %}active{% endif %} item" href="?order=votes#tab-answer">
+                  <i class="heart icon"></i> {% trans "votes" %}
+                </a>
+              </div>
+            </div>
+          {% endif %}{# answers_question #}
+
+          {% for answer in answers_question %}
+            <div class="item item-answers no-border">
+              <div class="stats">
+                <div class="vote-up stats-inside-detail" data-mode="answer" data-id="{{ answer.id }}">
+                  <i class="triangle up big link orange icon"></i>
+                </div>
+                <div class="vote-total stats-inside-detail" data-mode="answer" data-id="{{ answer.id }}">
+                  <div class="value">
+                    {{ answer.rating.get_difference }}
+                  </div>
+                </div>
+                <div class="vote-down stats-inside-detail" data-mode="answer" data-id="{{ answer.id }}">
+                  <i class="triangle down big link grey icon"></i>
+                </div>
+                <div class="favorite-icon stats-inside-detail">
+                  <i class="check link green icon"></i>
+                </div>
+              </div>
+              <div class="content">
+                <div class="description martor-preview content-description-detail">
+                  {{ answer.description|safe_markdown }}
+                </div>
+                <div class="extra">
+                  <table class="ui table no-border table-answer-footer">
+                    <tbody>
+                      <tr>
+                        <td class="ui grey color no-border sef-actions">
+                          <span class="ui link grey color share-action">{% trans "share" %}</span>
+                          <span class="ui link grey color edit-action">{% trans "edit" %}</span>
+                          <span class="ui link grey color flag-action">{% trans "flag" %}</span>
+                        </td>
+                        {% if answer.editor %}
+                          <td class="no-border user-info user-signature">
+                            <div class="ui comments">
+                              <a class="ui link no-underline user-action-time" title="{{ answer.modified }}">
+                                {% blocktrans with time=answer.modified|timesince %}edited {{ time }} ago{% endblocktrans %}
+                              </a>
+                              <div class="comment user-info-signature">
+                                <a class="avatar spf-link" href="{% url 'user_profile' pk=answer.editor.pk username=answer.editor.username %}">
+                                  <img src="{{ answer.editor.email|gravatar:'75' }}">
+                                </a>
+                                <div class="content">
+                                  <a class="author spf-link" href="{% url 'user_profile' pk=answer.editor.pk username=answer.editor.username %}">{{ answer.editor }}</a>
+                                  <div class="text">
+                                    <span class="reputation">
+                                      <i class="diamond orange icon"></i> <b>269K</b>
+                                    </span>
+                                    <span class="gold-badge">
+                                      <i class="circle small yellow icon icon-dot-badge"></i> 12
+                                    </span>
+                                    <span class="silver-badge">
+                                      <i class="circle small grey icon icon-dot-badge"></i> 38
+                                    </span>
+                                    <span class="bronze-badge">
+                                      <i class="circle small brown icon icon-dot-badge"></i> 93
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        {% endif %}{# answer.editor #}
+                        <td class="no-border user-info user-signature">
+                          <div class="ui comments">
+                            <span class="ui grey color user-action-time" title="{{ answer.created }}">
+                              {% blocktrans with time=answer.created|timesince %}answered {{ time }} ago{% endblocktrans %}
+                            </span>
+                            <div class="comment user-info-signature">
+                              <a class="avatar spf-link" href="{% url 'user_profile' pk=answer.author.pk username=answer.author.username %}">
+                                <img src="{{ answer.author.email|gravatar:'75' }}">
+                              </a>
+                              <div class="content">
+                                <a class="author spf-link" href="{% url 'user_profile' pk=answer.author.pk username=answer.author.username %}">{{ answer.author }}</a>
+                                <div class="text">
+                                  <span class="reputation">
+                                    <i class="diamond orange icon"></i> <b>269K</b>
+                                  </span>
+                                  <span class="gold-badge">
+                                    <i class="circle small yellow icon icon-dot-badge"></i> 12
+                                  </span>
+                                  <span class="silver-badge">
+                                    <i class="circle small grey icon icon-dot-badge"></i> 38
+                                  </span>
+                                  <span class="bronze-badge">
+                                    <i class="circle small brown icon icon-dot-badge"></i> 93
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="ui divider"></div>
+                  <table class="ui table no-border table-comments table-answer-comments" data-target="answer:{{ answer.id }}">
+                    <tbody>
+                      {% for comment in answer.get_comments_limit %}
+                        <tr id="answer-comment-{{ question.id }}">
+                          <td class="ui grey color top-align">18</td>
+                          <td class="top-align">
+                            <i class="arrow up grey link icon hover-opacity"></i><br />
+                            <i class="flag grey link icon hover-opacity"></i>
+                          </td>
+                          <td>{{ comment.comment|safe_markdown }} <a>{{ comment.author }}</a> <date class="ui grey color">{{ comment.created }}</date>
+                            {% if comment.edit %}<i class="ui pencil small grey icon"></i>{% endif %}</td>
+                        </tr>
+                      {% endfor %}
+                      <tr class="comment-actions">
+                        <td colspan="3" style="padding:10px;">
+                          {% if request.user.is_authenticated %}
+                            <span class="ui blue color link add-a-comment" data-target="answer:{{ question.id }}">add a comment</span>
+                            {% if answer.has_offset_comments %}
+                              <span class="ui grey color vertical-line">|</span>
+                            {% endif %}
+                          {% endif %}
+
+                          {% if answer.has_offset_comments %}
+                            <span class="ui blue color link show-more-comments" data-target="answer:{{ answer.id }}">
+                              show <b>{{ answer.get_comments_offset.count }}</b> more comments
+                            </span>
+                          {% endif %}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div><!-- end /.item-answers -->
+          {% endfor %}{# answers_question #}
+
+          <div class="ui divider"></div>
+
+          <h3 class="ui grey header" style="margin-bottom: 1.5em">{% trans "Your Answer" %}</h3>
+          <div class="answer-main" style="display:none">
+            {% if request.user.is_authenticated %}
+              <form class="ui form" method="post" action="{% url 'answer_create' question_id=question.id %}">
+                {% csrf_token %}
+                <div class="field">
+                  {{ answer_form.description }}
+                </div>
+                <div class="field">
+                  <div class="ui clearing segment no-border post-action-segment">
+                    <button class="ui right floated positive button post-answer-button" type="submit" disabled>
+                      <i class="check icon"></i> {% trans "Post Your Answer" %}
+                    </button>
+                  </div>
+                </div>
+              </form>
+            {% else %}
+              <div class="ui center aligned piled secondary segment">
+                <div class="ui big buttons">
+                  <a class="ui green button" href="{% url 'account_signup' %}?next={{ request.get_full_path }}">{% trans "Signup" %}</a>
+                  <div class="or"></div>
+                  <a class="ui blue button" href="{% url 'account_login' %}?next={{ request.get_full_path }}">{% trans "Signin" %}</a>
+                </div>
+              </div>
+            {% endif %}
+          </div><!-- end /.answer-main -->
+        </div><!-- end /.items -->
+
+        <div class="ui divider"></div>
+
+        <div class="ui paginations">
+          <div class="ui small pagination menu">
+            <a class="active item">
+              1
+            </a>
+            <a class="item">
+              2
+            </a>
+            <a class="item">
+              3
+            </a>
+            <div class="disabled item">
+              ...
+            </div>
+            <a class="item">
+              20
+            </a>
+            <a class="item">
+              next
+            </a>
+          </div><!-- end /.ui.pagination.menu -->
+        </div><!-- end /.paginations -->
+      </div>
+      <div class="column right-sidebar">
+        <div class="ui fluid right vertical">
+          <div class="sidebar-question-info">
+            <table class="ui table no-border">
+              <tbody>
+                <tr>
+                  <td class="ui grey color no-border">{% trans "asked" %}</td>
+                  <td class="no-border" title="{{ question.created }}">{{ question.created|timesince }} {% trans "ago" %}</td>
+                </tr>
+                <tr>
+                  <td class="ui grey color no-border">{% trans "viewed" %}</td>
+                  <td class="no-border">1,164 times</td>
+                </tr>
+                <tr>
+                  <td class="ui grey color no-border">{% trans "active" %}</td>
+                  <td class="no-border">
+                    <a href="" class="ui link blue color no-border spf-link" title="{{ question.created }}">{{ question.modified|timesince }} {% trans "ago" %}</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div><!-- end /.sidebar-question-info-->
+
+          <!--<div class="ui divider"></div>-->
+
+          <div class="sidebar-bulletin">
+            <div class="ui list">
+              <a class="item no-underline">
+                <i class="lightning icon"></i>
+                <div class="content">
+                  An excellent polish restaurant, quick delivery and hearty
+                </div>
+              </a>
+              <a class="item no-underline">
+                <i class="lightning icon"></i>
+                <div class="content">
+                  A taste of Shaanxi's delicious culinary traditions
+                </div>
+              </a>
+              <a class="item no-underline">
+                <i class="lightning icon"></i>
+                <div class="content">
+                  Greenpoint's best choice for quick and delicious sushi.
+                </div>
+              </a>
+            </div>
+          </div><!-- end /.sidebar-bulletin -->
+
+          <!--<div class="ui divider"></div>-->
+
+          <div class="sidebar-related-tags">
+            <h3 class="ui grey header">Related Tags</h3>
+            <div class="ui selection list"><!-- divided -->
+              <a class="item no-underline">
+                <div class="ui horizontal label no-radius">Fruit</div>
+                × 77468
+              </a>
+              <a class="item no-underline">
+                <div class="ui horizontal label no-radius">Candy</div>
+                × 16671
+              </a>
+              <a class="item no-underline">
+                <div class="ui horizontal label no-radius">Fruit</div>
+                × 9092
+              </a>
+              <a class="item no-underline">
+                <div class="ui horizontal label no-radius">Dog</div>
+                × 7066
+              </a>
+            </div>
+          </div><!-- end /.sidebar-related-tags -->
+
+          <div class="ui divider"></div>
+
+          <div class="sidebar-related-questions">
+            <h3 class="ui grey header">Related</h3>
+            <div class="ui list">
+              <a class="item no-underline">
+                <i class="ui answered icon">20</i>
+                <div class="content">
+                  Implementing multiple profiles with django-all-auth
+                </div>
+              </a>
+              <a class="item no-underline">
+                <i class="ui answered icon">38</i>
+                <div class="content">
+                  How to customize user profile when using django-allauth
+                </div>
+              </a>
+              <a class="item no-underline">
+                <i class="ui unanswered icon">27</i>
+                <div class="content">
+                  Django Endless Pagination Twitter Style Ajax breaks on another Ajax call
+                </div>
+              </a>
+              <a class="item no-underline">
+                <i class="ui unanswered icon">27</i>
+                <div class="content">
+                  Distinctively visualize vertical mindshare
+                </div>
+              </a>
+            </div>
+          </div><!-- end /.sidebar-related-questions -->
+        </div><!-- end /.ui fluid right vertical -->
+      </div>
+    </div><!-- end /.ui equal width vertically padded grid container -->
+
+  </div><!-- end /.page.content -->
+{% endblock %}
+
+
+{% block js %}
+  <script type="text/javascript" src="{% static 'plugins/js/ace.js' %}"></script>
+  <script type="text/javascript" src="{% static 'plugins/js/mode-markdown.js' %}"></script>
+  <script type="text/javascript" src="{% static 'plugins/js/ext-language_tools.js' %}"></script>
+  <script type="text/javascript" src="{% static 'plugins/js/theme-github.js' %}"></script>
+  <script type="text/javascript" src="{% static 'plugins/js/highlight.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'plugins/js/resizable.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'plugins/js/emojis.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/martor.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/djangofaq.detail.js' %}"></script>
+{% endblock %}

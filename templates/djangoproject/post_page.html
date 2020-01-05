@@ -1,0 +1,26 @@
+{% extends 'djangoproject/base.html' %}
+
+
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Course Name : {{posts.Course_name}}</h1>
+      {% autoescape off %}
+   <p class="display@xl">Course Detail:{{ posts.descriptions }}</p>
+{% endautoescape %}
+     <p class="lead">Course Created At : {{ posts.course_created_at }}</p>
+   <p class="lead">Course Updated At : {{ posts.course_updated_at }}</p>
+  {% if posts.is_active %}
+   <h1 class="leader">Course Promo is Working : {{posts.is_active}}</h1>
+  {% endif %}
+
+   <h1 class="lead">Course Link : {{posts.course_link}}</h1>
+  <h1 class="lead">Promo Code : {{posts.promo_code}}</h1>
+  </div>
+</div>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">{{posts.course_meta_keywords}}</li>
+  </ol>
+</nav>
+{% endblock %}

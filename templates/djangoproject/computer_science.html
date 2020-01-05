@@ -1,0 +1,74 @@
+{% extends "djangoproject/base.html" %}
+
+{% block content %}
+    {% load static %}
+<html>
+...
+<link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+<script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+...
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block;
+  position: relative;
+}
+
+ul li:hover {
+  background-color: #eee;
+}
+
+.close {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: 0%;
+  padding: 12px 16px;
+  transform: translate(0%, -50%);
+}
+
+.close:hover {background: #bbb;}
+</style>
+</head>
+<body>
+
+<p>University Rating Totally Based On RYP Rating </p>
+
+<ul>
+  <li>Adele</li>
+  <li>Agnes</li>
+  <li>Billy</li>
+  <li>Bob</li>
+  <li>Calvin</li>
+  <li>Christina</li>
+  <li>Cindy</li>
+</ul>
+
+</body>
+</html>
+</html>
+
+
+
+{% endblock %}

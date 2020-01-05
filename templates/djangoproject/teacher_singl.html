@@ -1,0 +1,35 @@
+{% extends 'djangoproject/base.html' %}
+{% load comments %}
+{% block content %}
+<div class="container">
+    <div class="no-shade card-box">
+        <h4>{{ teacher.name }}</h4>
+        {% if teacher.summary %}
+        <p>{{ teacher.summary }}</p>
+        {% endif %}
+    </div>
+
+
+    <div class="shadow-box">
+
+
+
+
+        {% if courses.paginator.page_range|length > 1 %}
+        <br>
+        <div class="pagination">
+            <a href="?page=1">&laquo;</a>
+            {% for i in courses.paginator.page_range %}
+                {% if i == courses.number %}
+                    <a href="?page={{ i }}"><b>{{ i }}</b></a>
+                {% else %}
+                    <a href="?page={{ i }}">{{ i }}</a>
+                {% endif %}
+            {% endfor %}
+            <a href="?page={{ courses.paginator.num_pages }}">&raquo;</a>
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

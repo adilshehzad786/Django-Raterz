@@ -1,0 +1,75 @@
+{% load staticfiles %}<!DOCTYPE html>
+{% load user_agents %}
+
+{% if not request|is_mobile %}
+   <html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns#">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta content='' property='fb:admins'/>
+  <meta content='' property='fb:app_id'/>
+
+  {% block robot %}
+  <meta name="robots" content="noodp, noydir"/>
+  {% endblock %}
+
+  <link rel="shortcut icon" href="{% static 'mrcoder/icons/favicon.ico' %}">
+  <link href="/feed/" rel="alternate" type="application/rss+xml" title="Latest Feeds" />
+
+  <title>{% block title %}Mr Coder {% endblock %}</title>
+  <link rel="canonical" href="https://djangofaq.org{% block canonical %}{% endblock %}">
+
+  {% block seo %}
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="keywords" content=""/>
+  {% endblock %}
+
+  {% block core_css %}
+  <link href="{% static 'mrcoder/plugins/css/semantic.min.css' %}" rel="stylesheet" media="all">
+  <link href="{% static 'mrcoder/css/github/global-github-theme.min.css' %}" rel="stylesheet" media="all">
+  {% endblock %}
+
+  <link href="{% static 'mrcoder/css/spfjs.css' %}" rel="stylesheet" media="all">
+  <link href="{% static 'mrcoder/css/djangofaq.css' %}" rel="stylesheet" media="all">
+  {% block css %}{% endblock %}
+
+  <script src="{% static 'mrcoder/js/jquery.min.js' %}"></script>
+  <script src="{% static 'mrcoder/js/semantic.min.js' %}"></script>
+</head>
+
+<body>
+  {% include "navs.html" %}
+
+  {% include "footer.html" %}
+
+  <div class="main-container">
+    {% block content %}{% endblock %}
+  </div>
+
+  {% block footer %}
+    {% include "footer.html" %}
+  {% endblock %}
+
+  <script src="{% static 'mrcoder/js/djangofaq.js' %}"></script>
+  <!-- begin spfjs -->
+  <div id="spfjs-progress-bar"><dt></dt><dd></dd></div>
+  <script src="{% static 'mrcoder/js/spfjs.min.js' %}"></script>
+  <script src="{% static 'mrcoder/js/spfjs-main.js' %}"></script>
+  <!-- end spfjs -->
+  {% block js %}{% endblock %}
+</body>
+</html>
+{% endif %}
+{% if request|is_mobile %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Dear User</h1>
+    <p class="lead">This Website Only Accessible From PC, Desktop Version Please Refresh</p>
+      <p class="lead">How to Access Desktop Version </p>
+      <li> Change Mobile Version to Desktop Version From Your Browser</li>
+  </div>
+</div>
+{% endif %}
+

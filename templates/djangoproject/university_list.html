@@ -1,0 +1,29 @@
+{% extends 'djangoproject/base.html' %} {% block content %}
+<div class="container">
+    <div class="shadow-box">
+        {% if programs %}
+        <table>
+            <thead>
+                <tr>
+                    <th>University name</th>
+
+                </tr>
+            </thead>
+            {% for p in university %}
+            <tr>
+                <td><a href="{% url 'university_single' pk=p.pk %}">{{ p }}</a></td>
+
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>There are no programs available</p>
+        {% endif %}
+    </div>
+    {% if  user.is_superuser and user.is_authenticated %}
+    <div class="empty-box">
+        <a href="{% url 'add_university' %}" class="btn btn-primary">Add University</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

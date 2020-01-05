@@ -1,0 +1,24 @@
+{% extends 'djangoproject/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Upload Error </h1>
+    <p class="lead">To Provide Better Experience ,RYP is currently Running on Low Disk So Upload Feature only Available at RYP Forum . </p>
+  </div>
+</div>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile">
+    <button type="submit">Upload</button>
+  </form>
+
+  {% if uploaded_file_url %}
+    <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
+  {% endif %}
+
+  <p><a href="{% url 'blog-home' %}">Return to home</a></p>
+{% endblock %}
