@@ -1,0 +1,7 @@
+{% extends 'base_white.html' %}
+{% block content %}
+{% for question in question_list %}
+       {% include 'user_post.html' %}
+
+        {% endfor %}
+{% endblock %}
